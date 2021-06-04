@@ -3,6 +3,8 @@ package utility;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
@@ -27,10 +29,10 @@ public class SuperTestNG {
 	@BeforeTest
 	public void StartReport() {
 		
-		SparkReport = new ExtentSparkReporter("D:\\Mobile\\Testing\\reports\\.AutomationReport.html");
+		SparkReport = new ExtentSparkReporter("D:\\Mobile\\Testing\\reports\\AutomationReport.html");
 		ExtentReport = new ExtentReports();
 		ExtentReport.attachReporter(SparkReport);
-		Test= ExtentReport.createTest("<b><font color=407899>" + "Franchise Partner" + "</font></b>");
+		Test= ExtentReport.createTest("<b><font color=407899>" + "Login In to APP" + "</font></b>");
 		
 	}
 	
@@ -45,8 +47,9 @@ public class SuperTestNG {
 		capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "uiautomator2");
 		capabilities.setCapability(MobileCapabilityType.APP, appPath.getAbsolutePath());
 		
-		URL url = new URL("127.0.0.1:4723/wd/hub");
+		URL url = new URL("http://127.0.0.1:4723/wd/hub");
 		driver = new AndroidDriver<>(url, capabilities);
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
 	
 	@AfterMethod
